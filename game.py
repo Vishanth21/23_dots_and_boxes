@@ -12,8 +12,8 @@ def _is_ascii_digits(text):
 
 
 class DotsAndBoxes:
-    def __init__(self):
-        self.board = Board()
+    def __init__(self, rows=2, cols=2):
+        self.board = Board(rows, cols)
         self.current = 0
         self.scores = [0, 0]
 
@@ -47,8 +47,9 @@ class DotsAndBoxes:
             newly_completed = completed_boxes(self.board, before)
 
             if newly_completed:
-                self.scores[self.current] += newly_completed
-                print(f"Player {self.current + 1} completed {newly_completed} box(es) and plays again.")
+                self.board.claim(newly_completed, self.current + 1)
+                self.scores[self.current] += len(newly_completed)
+                print(f"Player {self.current + 1} completed {len(newly_completed)} box(es) and plays again.")
             else:
                 self.current = 1 - self.current
 

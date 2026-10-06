@@ -5,6 +5,12 @@ class Board:
         self.horizontal = [[False] * cols for _ in range(rows + 1)]
         self.vertical = [[False] * (cols + 1) for _ in range(rows)]
         self.completed = set()
+        self.owner = {}
+
+    def claim(self, cells, player):
+        """Record that `player` (1 or 2) won each box cell in `cells`."""
+        for cell in cells:
+            self.owner[cell] = player
 
     def add_line(self, orientation, row, col):
         if orientation == "H":
@@ -41,6 +47,8 @@ class Board:
                     wall = "|" if self.vertical[r][c] else " "
                     middle.append(wall)
                     if c < self.cols:
-                        middle.append(" " + ("X" if (r, c) in self.completed else " ") + " ")
+                        owner = self.owner.get((r, c))
+                        marker = str(owner) if owner else ("X" if (r, c) in self.completed else " ")
+                        middle.append(" " + marker + " ")
                 print("".join(middle))
         print()

@@ -17,4 +17,5 @@ def valid_move(board, orientation, row, col):
 
 
 def completed_boxes(board, before):
-    return len(board.completed - before)
+    """Return the set of box cells newly completed since the `before` snapshot."""
+    return board.completed - before
