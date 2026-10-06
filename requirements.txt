@@ -1,3 +1,5 @@
-# This project uses only the Python standard library.
-# No third-party packages are required.
+# The game itself uses only the Python standard library.
+# pytest is a test-only dependency.
 # Python 3.10+ recommended.
+
+pytest
