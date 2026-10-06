@@ -35,4 +35,8 @@ pytest tests/test_game.py::test_box_completion -v   # single test
 - `Board.add_line()` raises `ValueError` on bad orientation / out-of-range / repeated lines — a defensive guard, since `game.py` validates via `valid_move()` first.
 - `board.is_complete()` compares used lines against total lines; a full board ends the loop and any post-completion moves must not corrupt state.
 - Tests live in `tests/test_game.py` (pytest, 11 cases). Run with `pytest -v` from the repo root.
-- Untracked file `Lab_4_VibeCoding_Student_handout.pdf` is the assignment handout, not source.
+
+## Submission artifacts
+
+- `Lab_4_VibeCoding_Student_handout.pdf` — the assignment handout, not source.
+- `before.mp4` / `after.mp4` — Task 1 demo recordings. `before` shows the `²` crash; `after` shows the same sequence running cleanly (invalid input rejected, game continues to `Q`). Reproduce with: `H 0 0` / `H 1 0` / `V 0 0` / `H 0 1` / `H 1 1` / `V 0 2` / `V 0 1` / `H 0 ²` (then `Q` in after).
