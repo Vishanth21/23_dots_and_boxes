@@ -1,6 +1,16 @@
 from board import Board
 from rules import valid_move, completed_boxes
 
+
+def _is_ascii_digits(text):
+    """True only for non-empty strings of ASCII digits 0-9.
+
+    str.isdigit() also accepts non-ASCII digits such as '\u00b2' and '\u2460',
+    which then raise ValueError in int(). Restricting to ASCII avoids the crash.
+    """
+    return bool(text) and all("0" <= ch <= "9" for ch in text)
+
+
 class DotsAndBoxes:
     def __init__(self):
         self.board = Board()
@@ -23,7 +33,7 @@ class DotsAndBoxes:
                 continue
 
             orientation, row, col = parts
-            if not row.isdigit() or not col.isdigit():
+            if not _is_ascii_digits(row) or not _is_ascii_digits(col):
                 print("Row and column must be numbers.")
                 continue
 
