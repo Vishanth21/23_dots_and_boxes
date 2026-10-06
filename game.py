@@ -17,15 +17,32 @@ class DotsAndBoxes:
         self.current = 0
         self.scores = [0, 0]
 
+    def _read_move(self):
+        """Prompt for a move. Returns None if input is closed (Ctrl-D) or
+        interrupted (Ctrl-C), so run() can exit cleanly instead of crashing."""
+        try:
+            return input(f"Player {self.current + 1}, move: ")
+        except (EOFError, KeyboardInterrupt):
+            print()
+            return None
+
     def run(self):
         print("Dots and Boxes")
         print("Enter moves as H row col or V row col.")
         print("Rows and columns start at 0.")
         print("Example: H 0 1")
+        print("Enter Q to quit.")
 
         while not self.board.is_complete():
             self.board.display(self.scores, self.current)
-            raw = input(f"Player {self.current + 1}, move: ").strip().upper()
+            raw = self._read_move()
+            if raw is None:
+                print("Game ended by user.")
+                return
+            raw = raw.strip().upper()
+            if raw in {"Q", "QUIT"}:
+                print("Game ended by user.")
+                return
             parts = raw.split()
 
             if len(parts) != 3:

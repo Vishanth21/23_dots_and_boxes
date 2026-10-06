@@ -13,10 +13,27 @@ class Board:
             self.owner[cell] = player
 
     def add_line(self, orientation, row, col):
+        """Mark a line as drawn.
+
+        Raises ValueError for an unknown orientation, an out-of-range
+        coordinate, or a line that is already drawn. game.py validates moves
+        first, so this is a defensive invariant guard: it makes it impossible
+        to corrupt the board by calling add_line directly.
+        """
         if orientation == "H":
+            if not (0 <= row <= self.rows and 0 <= col < self.cols):
+                raise ValueError(f"Horizontal line out of range: {row}, {col}")
+            if self.horizontal[row][col]:
+                raise ValueError(f"Horizontal line already drawn: {row}, {col}")
             self.horizontal[row][col] = True
-        else:
+        elif orientation == "V":
+            if not (0 <= row < self.rows and 0 <= col <= self.cols):
+                raise ValueError(f"Vertical line out of range: {row}, {col}")
+            if self.vertical[row][col]:
+                raise ValueError(f"Vertical line already drawn: {row}, {col}")
             self.vertical[row][col] = True
+        else:
+            raise ValueError(f"Unknown orientation: {orientation!r}")
         self._update_completed()
 
     def _update_completed(self):
